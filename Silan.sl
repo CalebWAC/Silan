@@ -1,0 +1,1 @@
+presu("Saluton Mondo!");
