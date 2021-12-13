@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/codio/workspace/workspace.csproj": {}
+  },
+  "projects": {
+    "/home/codio/workspace/workspace.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/codio/workspace/workspace.csproj",
+        "projectName": "workspace",
+        "projectPath": "/home/codio/workspace/workspace.csproj",
+        "packagesPath": "/home/codio/.nuget/packages/",
+        "outputPath": "/home/codio/workspace/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/codio/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "org.matheval": {
+              "target": "Package",
+              "version": "[1.0.0.2, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
