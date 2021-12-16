@@ -74,41 +74,8 @@ namespace Silan
                     break;
                 case "for":
                     if (line.Contains("(var i = ")) {
-                        //Console.WriteLine(line);
-                        //Console.WriteLine(words[7].Substring(0, words[7].Length));
                         for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
-                            //int n = lineNumber;
-                            foreach (string lineF in lines) {
-                                string word1 = "";
-                                List<string> wordsF = new List<string>();
-                                if (line.IndexOf(lineF) > lineNumber) {
-                                    Console.WriteLine(lineF);
-                                    foreach (char character in lineF) {
-                                        if (character == ' ') {
-                                            wordsF.Add(word1);
-                                            word1 = "";
-                                        } else if (/*character == ';' || */character == '\n') {
-                                            wordsF.Add(word1);
-                                            break;
-                                        } else {
-                                            word1 += character;
-                                        }
-                                    }
-                                    Run(word1, wordsF, lineF, lines, stringVars, intVars, floatVars, boolVars, charVars);
-                                    lineNumber++;
-                                } else if (lineF.Contains("}")) {
-                                    // Console.WriteLine("I have hit the }");
-                                    break;
-                                }
-                            }
-                        }
-                      
-                        /* int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1));
-                        while (i < Int32.Parse(words[7].Substring(0, words[7].Length - 1))) {
-                            Console.WriteLine(words[words.IndexOf(word) + 1]);
-                            Run(words[words.IndexOf(word) + 1], words, line, lines, stringVars, intVars, floatVars, boolVars, charVars);
-                            i++;
-                        } */
+                        } 
                     }
                     break;
                 case "class":
@@ -226,7 +193,14 @@ namespace Silan
             Dictionary<string, bool> boolVars = new Dictionary<string, bool>();
             Dictionary<string, char> charVars = new Dictionary<string, char>();
           
-            foreach (string line in lines) {
+            
+            string line;
+            foreach (string lineLoop in lines) {
+                line = lineLoop;
+                while (line[0] == ' ') {
+                    line = line.Substring(1, line.Length - 1);
+                }
+                
                 string word1 = "";
                 // String[] words =  line.Split(" ")
                 foreach (char character in line) {
@@ -236,7 +210,7 @@ namespace Silan
                     } else if (/*character == ';' || */character == '\n') {
                         words.Add(word1);
                         break;
-                    } else {
+                    } else if (character != '\t') {
                         word1 += character;
                     }
                 } words.Add(word1);
@@ -251,8 +225,7 @@ namespace Silan
         }
       
         static void Main(string[] args)
-        {   
-            Save.Clear();
+        { 
             string location = "";
             try {
                 location = args[0];
