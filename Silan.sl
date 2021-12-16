@@ -1,1 +1,1 @@
-presu("Saluton Mondo!");
+print("Hello World!");
