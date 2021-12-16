@@ -239,7 +239,8 @@ namespace Silan
                     } else {
                         word1 += character;
                     }
-                }
+                } words.Add(word1);
+                
                 try {
                     foreach (string word in words) {
                         Run(word, words, line, lines, stringVars, intVars, floatVars, boolVars, charVars);
