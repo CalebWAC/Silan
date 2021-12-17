@@ -1,4 +1,2 @@
-print("Input something: ");
-var string input = readLine();
-println("Your input was:")
-println(input);
+var string this ** "that";
+print("I should not run (although walking is perfectly acceptable)");

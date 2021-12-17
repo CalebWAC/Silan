@@ -59,10 +59,16 @@ namespace Silan
                         } else if (words[1] == "char") {
                             charVars.Add(words[2], char.Parse(line.Substring(line.IndexOf("'") + 1, (line.Length - words[2].Length) - 15)));
                         } else {
+                            Console.BackgroundColor = ConsoleColor.Red;
                             Console.WriteLine("ERROR S3: Unrecognized type");
+                            Console.ResetColor();
+                            Environment.Exit(1);
                         }
                     } else {
+                        Console.BackgroundColor = ConsoleColor.Red;
                         Console.WriteLine("ERROR S1: No '='");
+                        Console.ResetColor();
+                        Environment.Exit(1);
                     }
                     break;
 
@@ -141,7 +147,10 @@ namespace Silan
                                 } else if (charVars.ContainsKey(words[0])) {
                                     charVars[words[0]] = char.Parse(words[2].Substring(1, words[2].Length - 2));
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } else if (words[1] == "+=") {
                                 if (stringVars.ContainsKey(words[0])) {
@@ -152,7 +161,10 @@ namespace Silan
                                 } else if (floatVars.ContainsKey(words[0])) {
                                     floatVars[words[0]] += (float)ReEvaluate(words);
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } else if (words[1] == "-=") {
                                 if (intVars.ContainsKey(words[0])) {
@@ -160,7 +172,10 @@ namespace Silan
                                 } else if (floatVars.ContainsKey(words[0])) {
                                     floatVars[words[0]] -= (float)ReEvaluate(words);
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } else if (words[1] == "*=") {
                                 if (intVars.ContainsKey(words[0])) {
@@ -168,7 +183,10 @@ namespace Silan
                                 } else if (floatVars.ContainsKey(words[0])) {
                                     floatVars[words[0]] *= (float)ReEvaluate(words);
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } else if (words[1] == "/=") {
                                 if (intVars.ContainsKey(words[0])) {
@@ -176,7 +194,10 @@ namespace Silan
                                 } else if (floatVars.ContainsKey(words[0])) {
                                     floatVars[words[0]] /= (float)ReEvaluate(words);
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } else if (words[1] == "%=") {
                                 if (intVars.ContainsKey(words[0])) {
@@ -184,7 +205,10 @@ namespace Silan
                                 } else if (floatVars.ContainsKey(words[0])) {
                                     floatVars[words[0]] %= (float)ReEvaluate(words);
                                 } else {
+                                    Console.BackgroundColor = ConsoleColor.Red;
                                     Console.WriteLine("ERROR S2: Variable does not exist");
+                                    Console.ResetColor();
+                                    Environment.Exit(1);
                                 }
                             } 
                         }
@@ -258,7 +282,9 @@ namespace Silan
             try {
                 location = args[0];
             } catch {
+                Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERROR S0: Invalid file location");
+                Console.ResetColor();
                 System.Environment.Exit(1);
             }
             
