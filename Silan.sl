@@ -1,2 +1,3 @@
-var string this ** "that";
-print("I should not run (although walking is perfectly acceptable)");
+for (var i = 0; i < 10; i++) {
+    println("I am looping!");
+}

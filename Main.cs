@@ -85,10 +85,38 @@ namespace Silan
                     
                 case "for":
                     if (line.Contains("(var i = ")) {
-                        for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
+                        for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)) - 1; i++) {
+                                // Parses next line in loop
+                                string lineL = lines[lineNumber + 1];
+                                while (lineL[0] == ' ') {
+                                    lineL = lineL.Substring(1, lineL.Length - 1);
+                                }
+
+                                // Splits line into words
+                                string word2 = "";
+                                List<string> wordsL = new List<string>();
+                                foreach (char character in lineL) {
+                                    if (character == ' ') {
+                                        wordsL.Add(word2);
+                                        word2 = "";
+                                    } else if (/*character == ';' || */character == '\n') {
+                                        wordsL.Add(word2);
+                                        break;
+                                    } else if (character != '\t') {
+                                        word2 += character;
+                                    }
+                                } wordsL.Add(word2);
+
+                                // Evaluate and runs for each word
+                                try {
+                                    foreach (string wordL in wordsL) {
+                                        Run(wordL, wordsL, lineL, lines, stringVars, intVars, floatVars, boolVars, charVars);
+                                        // lineNumber++;
+                                    }
+                                } catch {}
+                            }
                             
                         } 
-                    }
                     break;
                     
                 case "class":
