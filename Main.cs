@@ -85,35 +85,39 @@ namespace Silan
                     
                 case "for":
                     if (line.Contains("(var i = ")) {
-                        for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)) - 1; i++) {
-                                // Parses next line in loop
-                                string lineL = lines[lineNumber + 1];
-                                while (lineL[0] == ' ') {
-                                    lineL = lineL.Substring(1, lineL.Length - 1);
+                        int tempLineNumber = lineNumber;
+                        for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)) - 1; i++) { 
+                            while (!lines[lineNumber + 1].Contains("}")) {
+                                    // Parses next line in loop
+                                    string lineL = lines[lineNumber + 1];
+                                    while (lineL[0] == ' ') {
+                                        lineL = lineL.Substring(1, lineL.Length - 1);
+                                    }
+
+                                    // Splits line into words
+                                    string word2 = "";
+                                    List<string> wordsL = new List<string>();
+                                    foreach (char character in lineL) {
+                                        if (character == ' ') {
+                                            wordsL.Add(word2);
+                                            word2 = "";
+                                        } else if (/*character == ';' || */character == '\n') {
+                                            wordsL.Add(word2);
+                                            break;
+                                        } else if (character != '\t') {
+                                            word2 += character;
+                                        }
+                                    } wordsL.Add(word2);
+
+                                    // Evaluate and runs for each word
+                                    try {
+                                        foreach (string wordL in wordsL) {
+                                            Run(wordL, wordsL, lineL, lines, stringVars, intVars, floatVars, boolVars, charVars);
+                                            lineNumber++;
+                                        }
+                                    } catch {}
                                 }
-
-                                // Splits line into words
-                                string word2 = "";
-                                List<string> wordsL = new List<string>();
-                                foreach (char character in lineL) {
-                                    if (character == ' ') {
-                                        wordsL.Add(word2);
-                                        word2 = "";
-                                    } else if (/*character == ';' || */character == '\n') {
-                                        wordsL.Add(word2);
-                                        break;
-                                    } else if (character != '\t') {
-                                        word2 += character;
-                                    }
-                                } wordsL.Add(word2);
-
-                                // Evaluate and runs for each word
-                                try {
-                                    foreach (string wordL in wordsL) {
-                                        Run(wordL, wordsL, lineL, lines, stringVars, intVars, floatVars, boolVars, charVars);
-                                        // lineNumber++;
-                                    }
-                                } catch {}
+                                lineNumber = tempLineNumber;
                             }
                             
                         } 
@@ -275,10 +279,12 @@ namespace Silan
             foreach (string lineLoop in lines) {
                 // Removes initial tabs
                 line = lineLoop;
-                while (line[0] == ' ') {
-                    line = line.Substring(1, line.Length - 1);
+                if (line != "") {
+                    while (line[0] == ' ') {
+                        line = line.Substring(1, line.Length - 1);
+                    }
                 }
-                
+
                 // Splits line into words
                 string word1 = "";
                 foreach (char character in line) {
@@ -292,7 +298,7 @@ namespace Silan
                         word1 += character;
                     }
                 } words.Add(word1);
-                
+
                 // Evaluate and runs for each word
                 try {
                     foreach (string word in words) {
