@@ -99,11 +99,16 @@ namespace Silan
                     if (IfEvaluate(words) == 1) {
                         
                     } else {
+                        int lineN = 0;
                         foreach (string lino in lines) {
-                            if (lino.Contains("}") && Array.IndexOf(lines, lino) > lineNumber) {
-                                lineNumber = Array.IndexOf(lines, lino) + 1;
+                            /* Console.Write($"{lino} ");
+                            Console.WriteLine(Array.IndexOf(lines, lino)); */
+                            if (lino.Contains("}") && lineN > lineNumber) {
+                                // Console.WriteLine(Array.IndexOf(lines, lino));
+                                lineNumber = lineN + 1;
                                 break;
                             }
+                            lineN++;
                         }
                     }
                     break;
