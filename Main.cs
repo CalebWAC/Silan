@@ -22,6 +22,7 @@ namespace Silan
             e.SetFomular(toAdd); 
             return (decimal)e.Eval();
         }
+        
         static decimal ReEvaluate(List<string> words) {
             Expression e = new Expression();
             string toAdd = "";
@@ -33,12 +34,29 @@ namespace Silan
                 count++;
             }
             e.SetFomular(toAdd); 
+            return e.Eval<Decimal>();
+        }
+        
+        static decimal IfEvaluate(List<string> words) {
+            Expression e = new Expression();
+            string toAdd = "IF";
+            int count = 0;
+            foreach (string vorto in words) {
+                if (count > 0 && vorto != "{") {
+                    toAdd += vorto;
+                }
+                count++;
+            }
+            toAdd = toAdd.Substring(0, toAdd.Length - 1);
+            toAdd += ", 1 + 0, 0 + 0)";
+            // Console.WriteLine(toAdd);
+            e.SetFomular(toAdd); 
             return (decimal)e.Eval();
         }
       
         static void Run(string word, List<string> words, string line, string[] lines, Dictionary<string, string> stringVars, Dictionary<string, int> intVars, Dictionary<string, float> floatVars, Dictionary<string, bool> boolVars, Dictionary<string, char> charVars) {
             if (word == words[0]) {
-                            
+                
             switch (word) {
                 // Keywords
 
@@ -75,6 +93,19 @@ namespace Silan
                 case "func":
                     break;
                 case "if":
+                    // Console.WriteLine(line);
+                    // Console.WriteLine("If you are reading this, the if statement has been detected");
+                    // Console.WriteLine(IfEvaluate(words));
+                    if (IfEvaluate(words) == 1) {
+                        
+                    } else {
+                        foreach (string lino in lines) {
+                            if (lino.Contains("}") && Array.IndexOf(lines, lino) > lineNumber) {
+                                lineNumber = Array.IndexOf(lines, lino) + 1;
+                                break;
+                            }
+                        }
+                    }
                     break;
                 case "while":
                     break;
@@ -302,7 +333,9 @@ namespace Silan
                 // Evaluate and runs for each word
                 try {
                     foreach (string word in words) {
-                        Run(word, words, line, lines, stringVars, intVars, floatVars, boolVars, charVars);
+                        // Run(word, words, line, lines, stringVars, intVars, floatVars, boolVars, charVars);
+                        lines[lineNumber] = line;
+                        Run(word, words, lines[lineNumber], lines, stringVars, intVars, floatVars, boolVars, charVars);
                         lineNumber++;
                     }
                 } catch {}
