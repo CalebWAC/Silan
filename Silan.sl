@@ -1,14 +1,7 @@
-println("I'm before the for loop!");
-
-for (var i = 0; i < 5; i++) {
-    print("This is the first loop");
-    println(" ... kaj cxi tio estas la dua lupo.");
+if (4 + 9 > 11) {
+    println("This should run");
 }
 
-println("I'm after the for loop!");
-
-// Whitespace doesn't throw an error either
-
-for (var i = 0; i < 3; i++) {
-    print("Two loops work perfectly fine");
+if (2 + -4 < -3) {
+    println("This statement should not run, however");
 }
