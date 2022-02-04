@@ -42,7 +42,8 @@ namespace Silan
                 case "switch":
                     break;
                     
-                case "for": For.ForLoop(lines, line, words, word, lineNumber); break;
+                case "for": 
+                    For.ForLoop(lines, line, words, word); break;
                     
                 case "class":
                     break;
