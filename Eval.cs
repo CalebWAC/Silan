@@ -4,7 +4,8 @@ using org.matheval;
 
 namespace Silan 
 {
-    class Eval {
+    class Eval 
+    {
         public static decimal Evaluate(List<string> words) {
             Expression e = new Expression();
             string toAdd = "";
