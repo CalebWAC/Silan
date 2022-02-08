@@ -41,7 +41,11 @@ namespace Silan
         private static void println(string line, string word)
         {
             if (word[8] == char.Parse("\"")) {
-                Console.WriteLine(line.Substring(9, line.Length - 12));
+                if (!line.Contains("  ")) {
+                    Console.WriteLine(line.Substring(9, line.Length - 12));
+                } else {
+                    Console.WriteLine(line.Substring(13, line.Length - 16));
+                }
             } else {
                 string toPrint = "";
                 try { toPrint = Variables.stringVars[line.Substring(8, line.Length - 10)]; } catch {

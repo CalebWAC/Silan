@@ -23,7 +23,7 @@ namespace Silan
 
                 case "if":
                     if (Eval.IfEvaluate(words) == 1) {
-                        
+
                     } else {
                         int lineN = 0;
                         foreach (string lino in lines) {
@@ -56,7 +56,7 @@ namespace Silan
 
                     // Functions
                     bool funcRan = Functions.CheckFunc(word, line);
-                    
+                    // Console.WriteLine(funcRan);
                     
                     // Variable Redeclaration (including shorthand operators
                     if (funcRan == false) {

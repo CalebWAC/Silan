@@ -16,6 +16,7 @@ namespace Silan
         public static void DivideLines(string[] lines, List<string> words) {
             // Splits lines in file
             foreach (string line in lines) {
+
                 // Splits line into words
                 string tempWord = "";
                 foreach (char character in line) {
@@ -30,6 +31,16 @@ namespace Silan
                     }
                 } words.Add(tempWord);
 
+                List<string> tempWords = new List<string>();
+                foreach (string word in words) {
+                    tempWords.Add(word);
+                }
+                foreach (string word in tempWords) {
+                    if (word == "") {
+                        words.RemoveAt(words.IndexOf(word));
+                    }
+                }
+
                 // Skips over line if not on that line number
                 if (Program.lineNumber != Array.IndexOf(lines, line)) {
                     continue;
@@ -38,7 +49,7 @@ namespace Silan
                 // Evaluate and runs for each word
                 try {
                     foreach (string word in words) {
-                        Program.Run(word, words, line.Trim(), lines);
+                        Program.Run(word, words, line, lines);
                         Program.lineNumber++;
                     }
                 } catch {}

@@ -1,6 +1,3 @@
-print("What do you want to be printed? ");
-var string input = readLine();
-
-for (var i = 0; i < 3; i++) {
-    println(input);
+if (3 < 2) {
+    println("Esti, aŭ ne esti, tio estas la demando");
 }
