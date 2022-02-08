@@ -63,12 +63,12 @@ namespace Silan
                     }
                 } else if (words[1].Contains('=')) {
                     ReassignOps(words, line);
-                } else {
+                } /* else {
                     Console.BackgroundColor = ConsoleColor.Red;
                     Console.WriteLine("ERROR S4: Unknown Operation");
                     Console.ResetColor();
                     Environment.Exit(1);
-                }
+                } */
             } else {
                 Shorthand(words);
             }
@@ -148,12 +148,12 @@ namespace Silan
                 } else if (floatVars.ContainsKey(words[0].Substring(0, words[0].Length - 2))) {
                     floatVars[words[0].Substring(0, words[0].Length - 2)]--;
                 }
-            } else {
+            } /* else {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERROR S4: Unknown Operation");
                 Console.ResetColor();
                 Environment.Exit(1);
-            }
+            } */
         }
     }
 }
