@@ -55,8 +55,7 @@ namespace Silan
                 default:
 
                     // Functions
-                    bool funcRan = Functions.CheckFunc(word, line);
-                    // Console.WriteLine(funcRan);
+                    bool funcRan = Functions.CheckFunc(word, line);\
                     
                     // Variable Redeclaration (including shorthand operators
                     if (funcRan == false) {

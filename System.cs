@@ -16,6 +16,10 @@ namespace Silan
         public static void DivideLines(string[] lines, List<string> words) {
             // Splits lines in file
             foreach (string line in lines) {
+                if (line == "\n" || line == "") {
+                    Program.lineNumber++;
+                    continue;
+                }
 
                 // Splits line into words
                 string tempWord = "";

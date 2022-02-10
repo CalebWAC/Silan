@@ -8,7 +8,7 @@ namespace Silan
     {
         public static bool CheckFunc(string word, string line)
         {
-            if (word.Contains("print(") || word.Contains("druck(") || word.Contains("presu(")) {
+            if (word.Contains("print(")) {
                 print(line, word);
                 return true;
             } else if (word.Contains("println(")) {
