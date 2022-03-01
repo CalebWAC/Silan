@@ -15,7 +15,11 @@ namespace Silan
         public static void AssignVar(List<string> words, string line) {
             if (words[3] == "=") {
                 if (words[1] == "int" || words[1] == "ent") {
-                    intVars.Add(words[2], (int)Eval.Evaluate(words));
+                    if (words[4] == "readLine();") {
+                        intVars.Add(words[2], Int32.Parse(Console.ReadLine()));
+                    } else {
+                        intVars.Add(words[2], (int)Eval.Evaluate(words));
+                    }
                 } else if (words[1] == "bool" || words[1] == "buleo") {
                     boolVars.Add(words[2], bool.Parse(words[4]));
                 } else if (words[1] == "float" || words[1] == "floso") {
@@ -29,11 +33,16 @@ namespace Silan
                 } else if (words[1] == "char") {
                     charVars.Add(words[2], char.Parse(line.Substring(line.IndexOf("'") + 1, (line.Length - words[2].Length) - 15)));
                 } else {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("ERROR S3: Unrecognized type");
-                    Console.ResetColor();
-                    Environment.Exit(1);
+                    SilSystem.ThrowError("ERROR S3: Unrecognized type");
                 }
+            } else if (words[2] == "=") {
+                try { boolVars.Add(words[1], bool.Parse(words[3])); } catch {
+                try { intVars.Add(words[1], (int)Eval.Evaluate(words)); } catch {
+                try { floatVars.Add(words[1], (float)Eval.Evaluate(words)); } catch {
+                try { charVars.Add(words[1], char.Parse(line.Substring(line.IndexOf("'") + 1, (line.Length - words[1].Length) - 11))); } catch {
+                try { stringVars.Add(words[1], line.Substring(line.IndexOf("\"") + 1, (line.Length - words[1].Length) - 11)); } catch {
+                    SilSystem.ThrowError("ERROR S3: Unrecognized type");
+                }}}}}
             } else {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERROR S1: No '='");

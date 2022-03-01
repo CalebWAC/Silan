@@ -30,10 +30,7 @@ namespace Silan
                 try { toPrint = (Variables.floatVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {  
                 try { toPrint = (Variables.intVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {
                 try { toPrint = (Variables.charVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {  
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);}}}}}
+                SilSystem.ThrowError("ERROR S2: Variable does not exist"); }}}}}
                 Console.Write(toPrint);
             }
         }
@@ -47,16 +44,16 @@ namespace Silan
                     Console.WriteLine(line.Substring(13, line.Length - 16));
                 }
             } else {
+                //Console.WriteLine(Variables.intVars["i"]);
+                //Console.WriteLine(line.Trim().Substring(8, line.Length - 10));
+
                 string toPrint = "";
                 try { toPrint = Variables.stringVars[line.Substring(8, line.Length - 10)]; } catch {
                 try { toPrint = (Variables.boolVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {
                 try { toPrint = (Variables.floatVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {  
                 try { toPrint = (Variables.intVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {
-                try { toPrint = (Variables.charVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {  
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);}}}}}
+                try { toPrint = (Variables.charVars[line.Trim().Substring(8, line.Length - 10)]).ToString(); } catch {  
+                SilSystem.ThrowError("ERROR S2: Variable does not exist"); }}}}}
                 Console.WriteLine(toPrint);
             }
         }

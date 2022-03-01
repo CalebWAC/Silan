@@ -6,13 +6,17 @@ namespace Silan
 {
     class For 
     {
+        public static bool waitOne = false;
+
         public static void ForLoop(string[] lines, string line, List<string> words, string word) {
             if (line.Contains("(var i = ")) {
                 int tempLineNumber = Program.lineNumber;
+                int end = Program.lineNumber;
                 string increment = words[8];
+                Variables.intVars.Add("i", 0);
                 switch (words[6]) {
                     case "<":
-                        lessThan(lines, line, words, word, increment, tempLineNumber); break;
+                        lessThan(lines, line, words, word, increment, tempLineNumber, end); break;
                     case ">": 
                         greaterThan(lines, line, words, word, increment, tempLineNumber); break;
                     case "<=": 
@@ -22,13 +26,18 @@ namespace Silan
                     default: // DEVERR - DEVeloper ERRor
                         Console.WriteLine("DEVERR: no valid operator"); break;
                 }
+
+                waitOne = true;
             }
         }
 
-        public static void lessThan(string[] lines, string line, List<string> words, string word, string increment, int tempLineNumber) {
+        public static void lessThan(string[] lines, string line, List<string> words, string word, string increment, int tempLineNumber, int end) {
             if (increment == "i++)") {
-                for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) { ;
-                    while (!lines[Program.lineNumber + 1].Contains("}")) {
+                for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
+                    stack.Push("for");
+
+                    // while (!lines[Program.lineNumber + 1].Contains("}")) {
+                    while (!lines[Program.lineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                         // Parses next line in loop
                         string lineL = lines[Program.lineNumber + 1].Trim();
 
@@ -55,8 +64,11 @@ namespace Silan
                             }
                         } catch {}
                     }
+                    Variables.intVars["i"]++;
+                    stack.Pop();
+                    end = Program.lineNumber;
                     Program.lineNumber = tempLineNumber;
-                } 
+                } Program.lineNumber = end + 1;
             } else {
                 for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i--) { 
                     while (!lines[Program.lineNumber + 1].Contains("}")) {

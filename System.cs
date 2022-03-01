@@ -54,6 +54,7 @@ namespace Silan
                 try {
                     foreach (string word in words) {
                         Program.Run(word, words, line, lines);
+                        // if (!For.waitOne) { Variables.intVars.Remove("i"); } else { For.waitOne = false; }
                         Program.lineNumber++;
                     }
                 } catch {}

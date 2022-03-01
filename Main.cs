@@ -26,13 +26,15 @@ namespace Silan
 
                     } else {
                         int lineN = 0;
+                        stack.Push("if");
                         foreach (string lino in lines) {
-                            if (lines[lineN].Contains("}") && lineN > lineNumber) {
+                            if (lines[lineN].Contains("}") && stack.CheckTop("if")) {
                                 lineNumber = lineN + 1;
                                 break;
                             }
                             lineN++;
                         }
+                        stack.Pop();
                     }
                     break;
 
@@ -55,7 +57,7 @@ namespace Silan
                 default:
 
                     // Functions
-                    bool funcRan = Functions.CheckFunc(word, line);\
+                    bool funcRan = Functions.CheckFunc(word, line);
                     
                     // Variable Redeclaration (including shorthand operators
                     if (funcRan == false) {
