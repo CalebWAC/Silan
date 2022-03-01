@@ -1,32 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/home/codio/workspace/workspace.csproj": {}
+    "C:\\Users\\206578\\RiderProjects\\Silan\\workspace.csproj": {}
   },
   "projects": {
-    "/home/codio/workspace/workspace.csproj": {
+    "C:\\Users\\206578\\RiderProjects\\Silan\\workspace.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/codio/workspace/workspace.csproj",
+        "projectUniqueName": "C:\\Users\\206578\\RiderProjects\\Silan\\workspace.csproj",
         "projectName": "workspace",
-        "projectPath": "/home/codio/workspace/workspace.csproj",
-        "packagesPath": "/home/codio/.nuget/packages/",
-        "outputPath": "/home/codio/workspace/obj/",
+        "projectPath": "C:\\Users\\206578\\RiderProjects\\Silan\\workspace.csproj",
+        "packagesPath": "C:\\Users\\206578\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\206578\\RiderProjects\\Silan\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/home/codio/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\206578\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "net6.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -37,23 +35,30 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.NETCore.App": {
-              "target": "Package",
-              "version": "[2.1.0, )",
-              "autoReferenced": true
-            },
             "org.matheval": {
               "target": "Package",
               "version": "[1.0.0.2, )"
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Users\\206578\\.dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
