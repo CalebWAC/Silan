@@ -2,9 +2,7 @@ using System.IO;
 namespace Silan;
 
 class Program
-{      
-    public static int lineNumber = 0;
-
+{
     static void Main(string[] args)
     {
         // Creates a new Silan System object
@@ -16,6 +14,6 @@ class Program
         // Reads the file and stores it
         string[] lines = File.ReadAllLines(location);
         
-        silanManager.DivideLines(lines);
+        silanManager.IterateOverLines(lines);
     }
 }

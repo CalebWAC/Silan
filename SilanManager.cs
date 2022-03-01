@@ -23,11 +23,11 @@ class SilanManager
         return null;
     }
 
+    /** Splits a line into a list of words */
     public List<string> SplitLines(string line)
     {
         List<string> words = new List<string>();
         
-        // Splits line into words
         string tempWord = "";
         foreach (char character in line) {
             if (character == ' ') {
@@ -45,28 +45,19 @@ class SilanManager
         return words;
     }
 
-    public void DivideLines(string[] lines)
+    public void IterateOverLines(string[] lines)
     {
-
         List<string> words = new List<string>();
         
-        // Splits lines in file
         foreach (string line in lines) {
-            if (line == "\n" || line == "") {
-                Program.lineNumber++;
-                continue;
-            }
-
+            // Splits
             words = SplitLines(line);
-
-            // Skips over line if not on that line number
-            if (Program.lineNumber != Array.IndexOf(lines, line)) {
-                continue;
-            }
 
             // Evaluates and runs for each word
             ExecuteLine(words, line, lines);
-            Program.lineNumber++;
+            
+            // Clears words for next line
+            words.Clear();
         }
     }
     
@@ -86,7 +77,7 @@ class SilanManager
                 if (Eval.IfEvaluate(words) == 1) {
 
                 } else {
-                    int lineN = 0;
+                    /* int lineN = 0;
                     stack.Push("if");
                     foreach (string lino in lines) {
                         if (lines[lineN].Contains("}") && stack.CheckTop("if")) {
@@ -95,7 +86,7 @@ class SilanManager
                         }
                         lineN++;
                     }
-                    stack.Pop();
+                    stack.Pop(); */
                 }
                 break;
 
@@ -130,6 +121,5 @@ class SilanManager
                 break;
 
         }
-        words.Clear();
     }
 }
