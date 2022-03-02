@@ -56,9 +56,18 @@ class Variables
         if (words.Count > 1) {
             if (words[1] == "=") {
                 if (stringVars.ContainsKey(words[0])) {
-                    stringVars[words[0]] = line.Substring(line.IndexOf("\"") + 1, (line.Length - words[0].Length) - 6);
+                    if (words[2] == "readLine();") {
+                        stringVars[words[0]] = Console.ReadLine();
+                    }
+                    else {
+                        stringVars[words[0]] = line.Substring(line.IndexOf("\"") + 1, (line.Length - words[0].Length) - 6);
+                    }
                 } else if (intVars.ContainsKey(words[0])) {
-                    intVars[words[0]] = (int)Eval.ReEvaluate(words);
+                    if (words[2] == "readLine();") {
+                        intVars[words[0]] = Int32.Parse(Console.ReadLine());
+                    } else {
+                        intVars[words[0]] = (int)Eval.ReEvaluate(words);
+                    }
                 } else if (boolVars.ContainsKey(words[0])) {
                     boolVars[words[0]] = bool.Parse(words[2]);
                 } else if (floatVars.ContainsKey(words[0])) {

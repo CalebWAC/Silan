@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
+
 namespace Silan;
 
 class SilanManager
@@ -29,7 +31,7 @@ class SilanManager
         
         // Splits line into words
         string tempWord = "";
-        foreach (char character in line) {
+        foreach (char character in line.Trim()) {
             if (character == ' ') {
                 words.Add(tempWord);
                 tempWord = "";
@@ -52,12 +54,11 @@ class SilanManager
         
         // Splits lines in file
         while (Program.LineNumber != lines.Length) {
-
             words = SplitLines(lines[Program.LineNumber]);
 
             // Evaluates and runs for each word
-            ExecuteLine(words, lines[Program.LineNumber], lines);
-            
+            ExecuteLine(words, lines[Program.LineNumber].Trim(), lines);
+
             Program.LineNumber++;
             words.Clear();
         }
@@ -76,23 +77,13 @@ class SilanManager
                 break;
             
             case "if":
-                if (Eval.IfEvaluate(words) == 1) {
-
-                } else {
-                    int lineN = 0;
-                    stack.Push("if");
-                    foreach (string lino in lines) {
-                        if (lines[lineN].Contains("}") && stack.CheckTop("if")) {
-                            Program.LineNumber = lineN + 1;
-                            break;
-                        }
-                        lineN++;
-                    }
-                    stack.Pop();
-                }
+                If ifObject = new If();
+                ifObject.ExecuteIfStatement(words, lines);
                 break;
 
             case "while":
+                While whileObject = new While();
+                whileObject.WhileLoop(words, lines);
                 break;
             case "do":
                 break;

@@ -46,7 +46,27 @@ class Eval
         }
         toAdd = toAdd.Substring(0, toAdd.Length - 1);
         toAdd += ", 1 + 0, 0 + 0)";
-        e.SetFomular(toAdd); 
+        e.SetFomular(toAdd);
+        
+        CheckToBind(e);
+        
         return (decimal)e.Eval();
+    }
+
+    public static void CheckToBind(Expression e)
+    {
+        List<string> variables = e.getVariables();
+        foreach (string variable in variables)
+        {
+            try { e.Bind(variable, Variables.intVars[variable]); } catch {
+            try { e.Bind(variable, Variables.floatVars[variable]); } catch {
+            try { e.Bind(variable, Variables.boolVars[variable]); } catch {
+            try { e.Bind(variable, Variables.stringVars[variable]); } catch {
+            try { e.Bind(variable, Variables.charVars[variable]); } catch
+            {
+                SilanManager silanManager = new SilanManager();
+                silanManager.ThrowError("ERROR S2: Variable does not exist");
+            }}}}}
+        }
     }
 }
