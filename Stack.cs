@@ -13,6 +13,11 @@ class stack {
     }
 
     public static bool CheckTop(string top) {
-        return stackList[^1] == top;
+        try
+        {
+            return stackList[^1] == top;
+        } catch {}
+
+        return false;
     }
 }

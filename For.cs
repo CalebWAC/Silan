@@ -4,22 +4,35 @@ namespace Silan;
 
 class For
 {
-    // private static int ActiveFors = 0;
     private string[] Lines { get; set; }
     private int TempLineNumber { get; set; }
-    private int End { get; set; }
+
+    private int _end;
+    private int End
+    {
+        get
+        {
+            return this._end;
+        }
+        set
+        {
+          //Console.WriteLine("End: " + value);
+          _end = value;
+        }
+    }
+
     private string Increment { get; set; }
     public SilanManager SilanManager = new SilanManager();
 
     public void ForLoop(string[] lines, string line, List<string> words) {
-        if (line.Contains("(var ") && line.Contains(" = ")) {
-            TempLineNumber = Program.lineNumber;
-            End = Program.lineNumber;
+        if ((line.Contains("(var ") || line.Contains("var ")) && line.Contains(" = ")) {
+            TempLineNumber = Program.LineNumber;
+            End = Program.LineNumber;
             Increment = words[8].Substring(1, words[8].Length - 1);
+            try { Variables.intVars.Remove(words[2]); } catch {}
             Variables.intVars.Add(words[2], 0);
 
             Lines = lines;
-            // ActiveFors++;
             
             switch (words[6]) {
                 case "<":
@@ -33,8 +46,6 @@ class For
                 default: // DEVERR - DEVeloper ERRor
                     Console.WriteLine("DEVERR: no valid operator"); break;
             }
-
-            // ActiveFors--;
         }
     }
 
@@ -43,152 +54,209 @@ class For
         {
             for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
                 stack.Push("for");
-
-                // while (!Lines[Program.lineNumber + 1].Contains("}")) {
-                while (!Lines[Program.lineNumber + 1].Contains("}") && stack.CheckTop("for")) {
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Variables.intVars["i"]++;
-                // stack.Pop();
-                End = Program.lineNumber;
-                Program.lineNumber = TempLineNumber;
-            } Program.lineNumber = End + 1;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
+            } 
+            Program.LineNumber = End + 1;
         } else {
             for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i < Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i--) { 
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Variables.intVars["i"]++;
-                stack.Pop();
-                End = Program.lineNumber;
-                Program.lineNumber = TempLineNumber;
-            } Program.lineNumber = End + 1;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
+            } 
+            Program.LineNumber = End + 1;
         }
     }
 
     public void greaterThan(List<string> words) {
-        if (Increment == "i++)") {
-            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i > Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) { ;
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+        if (Increment == "++)" || Increment == "++")
+        {
+            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i > Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
             } 
+            Program.LineNumber = End + 1;
         } else {
             for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i > Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i--) { 
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
-                    
+
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
             } 
+            Program.LineNumber = End + 1;
         }
     }
 
     public void lessEqual(List<string> words) {
-        if (Increment == "i++)") {
-            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i <= Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) { ;
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+        if (Increment == "++)" || Increment == "++")
+        {
+            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i <= Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
             } 
+            Program.LineNumber = End + 1;
         } else {
             for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i <= Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i--) { 
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for")) {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+                    
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
             } 
+            Program.LineNumber = End + 1;
         }
     }
 
-    public void greaterEqual(List<string> words) {
-        if (Increment == "i++)") {
-            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i >= Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i++) { ;
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+    public void greaterEqual(List<string> words)
+    {
+        if (Increment == "++)" || Increment == "++")
+        {
+            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1));
+                 i >= Int32.Parse(words[7].Substring(0, words[7].Length - 1));
+                 i++)
+            {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for"))
+                {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
-            } 
-        } else {
-            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1)); i >= Int32.Parse(words[7].Substring(0, words[7].Length - 1)); i--) { 
-                while (!Lines[Program.lineNumber + 1].Contains("}")) {
+
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
+            }
+
+            Program.LineNumber = End + 1;
+        }
+        else
+        {
+            for (int i = Int32.Parse(words[4].Substring(0, words[4].Length - 1));
+                 i >= Int32.Parse(words[7].Substring(0, words[7].Length - 1));
+                 i--)
+            {
+                stack.Push("for");
+                while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("for"))
+                {
                     // Parses next line in loop
-                    string lineL = Lines[Program.lineNumber + 1].Trim();
+                    string lineL = Lines[Program.LineNumber + 1].Trim();
 
                     // Splits line into words
                     List<string> wordsL = new List<string>();
                     wordsL = SilanManager.SplitLines(lineL.Trim());
 
                     // Evaluate and runs for each word
+                    stack.Pop();
+
+                    Program.LineNumber++;
                     SilanManager.ExecuteLine(wordsL, lineL.Trim(), Lines);
-                    Program.lineNumber++;
                 }
-                Program.lineNumber = TempLineNumber;
-            } 
+
+                Variables.intVars[words[2]]++;
+                End = Program.LineNumber;
+                Program.LineNumber = TempLineNumber;
+            }
+
+            Program.LineNumber = End + 1;
         }
     }
 }

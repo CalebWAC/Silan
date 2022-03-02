@@ -45,28 +45,21 @@ class SilanManager
         return words;
     }
 
-    public void DivideLines(string[] lines)
+    public void IterateOverLines(string[] lines)
     {
 
         List<string> words = new List<string>();
         
         // Splits lines in file
-        foreach (string line in lines) {
-            if (line == "\n" || line == "") {
-                Program.lineNumber++;
-                continue;
-            }
+        while (Program.LineNumber != lines.Length) {
 
-            words = SplitLines(line);
-
-            // Skips over line if not on that line number
-            if (Program.lineNumber != Array.IndexOf(lines, line)) {
-                continue;
-            }
+            words = SplitLines(lines[Program.LineNumber]);
 
             // Evaluates and runs for each word
-            ExecuteLine(words, line, lines);
-            Program.lineNumber++;
+            ExecuteLine(words, lines[Program.LineNumber], lines);
+            
+            Program.LineNumber++;
+            words.Clear();
         }
     }
     
@@ -90,7 +83,7 @@ class SilanManager
                     stack.Push("if");
                     foreach (string lino in lines) {
                         if (lines[lineN].Contains("}") && stack.CheckTop("if")) {
-                            Program.lineNumber = lineN + 1;
+                            Program.LineNumber = lineN + 1;
                             break;
                         }
                         lineN++;
@@ -130,6 +123,5 @@ class SilanManager
                 break;
 
         }
-        words.Clear();
     }
 }
