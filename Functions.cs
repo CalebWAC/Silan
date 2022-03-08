@@ -23,12 +23,21 @@ class Functions
             Console.Write(line.Substring(7, line.Length - 10));
         } else {
             string toPrint = "";
+            // For variables
             try { toPrint = Variables.stringVars[line.Substring(6, line.Length - 8)]; } catch {
             try { toPrint = (Variables.boolVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {
             try { toPrint = (Variables.floatVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {  
             try { toPrint = (Variables.intVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {
-            try { toPrint = (Variables.charVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {  
-            SilanManager.ThrowError("ERROR S2: Variable does not exist"); }}}}}
+            try { toPrint = (Variables.charVars[line.Substring(6, line.Length - 8)]).ToString(); } catch {
+                
+            // For constants
+            try { toPrint = Constants.stringConsts[line.Substring(6, line.Length - 8)]; } catch { 
+            try { toPrint = (Constants.boolConsts[line.Substring(6, line.Length - 8)]).ToString(); } catch {
+            try { toPrint = (Constants.floatConsts[line.Substring(6, line.Length - 8)]).ToString(); } catch {
+            try { toPrint = (Constants.intConsts[line.Substring(6, line.Length - 8)]).ToString(); } catch { 
+            try { toPrint = (Constants.charConsts[line.Substring(6, line.Length - 8)]).ToString(); } catch {
+                
+            SilanManager.ThrowError("ERROR S2: Variable does not exist"); }}}}}}}}}}
             Console.Write(toPrint);
         }
     }
@@ -42,16 +51,22 @@ class Functions
                 Console.WriteLine(line.Substring(13, line.Length - 16));
             }
         } else {
-            //Console.WriteLine(Variables.intVars["i"]);
-            //Console.WriteLine(line.Trim().Substring(8, line.Length - 10));
-
             string toPrint = "";
+            // For variables
             try { toPrint = Variables.stringVars[line.Substring(8, line.Length - 10)]; } catch {
             try { toPrint = (Variables.boolVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {
             try { toPrint = (Variables.floatVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {  
             try { toPrint = (Variables.intVars[line.Substring(8, line.Length - 10)]).ToString(); } catch {
             try { toPrint = (Variables.charVars[line.Trim().Substring(8, line.Length - 10)]).ToString(); } catch {  
-            SilanManager.ThrowError("ERROR S2: Variable does not exist"); }}}}}
+            
+            // For constants
+            try { toPrint = Constants.stringConsts[line.Substring(8, line.Length - 10)]; } catch { 
+            try { toPrint = (Constants.boolConsts[line.Substring(8, line.Length - 10)]).ToString(); } catch {
+            try { toPrint = (Constants.floatConsts[line.Substring(8, line.Length - 10)]).ToString(); } catch {
+            try { toPrint = (Constants.intConsts[line.Substring(8, line.Length - 10)]).ToString(); } catch { 
+            try { toPrint = (Constants.charConsts[line.Substring(8, line.Length - 10)]).ToString(); } catch {
+           
+            SilanManager.ThrowError("ERROR S2: Variable does not exist"); }}}}}}}}}}
             Console.WriteLine(toPrint);
         }
     }

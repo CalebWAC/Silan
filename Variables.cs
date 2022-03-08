@@ -19,14 +19,15 @@ class Variables
                 if (words[4] == "readLine();") {
                     intVars.Add(words[2], Int32.Parse(Console.ReadLine()));
                 } else {
-                    intVars.Add(words[2], (int)Eval.Evaluate(words));
+                    intVars.Add(words[2], (int)Eval.Evaluate(words, false));
                 }
             } else if (words[1] == "bool" || words[1] == "buleo") {
-                boolVars.Add(words[2], bool.Parse(words[4]));
+                try { boolVars.Add(words[2], bool.Parse(words[4])); }
+                catch { boolVars.Add(words[2], bool.Parse(words[4].Substring(0, words[4].Length - 1))); }
             } else if (words[1] == "float" || words[1] == "floso") {
-                floatVars.Add(words[2], (float)Eval.Evaluate(words));
+                floatVars.Add(words[2], (float)Eval.Evaluate(words, false));
             } else if (words[1] == "string") {
-                if (words[4] == "readLine();") {
+                if (words[4] == "readLine();" || words[4] == "readLine()") {
                     stringVars.Add(words[2], Console.ReadLine());
                 } else {
                     stringVars.Add(words[2], line.Substring(line.IndexOf("\"") + 1, (line.Length - words[2].Length) - 17));
@@ -37,18 +38,26 @@ class Variables
                 SilanManager.ThrowError("ERROR S3: Unrecognized type");
             }
         } else if (words[2] == "=") {
-            try { boolVars.Add(words[1], bool.Parse(words[3])); } catch {
-            try { intVars.Add(words[1], (int)Eval.Evaluate(words)); } catch {
-            try { floatVars.Add(words[1], (float)Eval.Evaluate(words)); } catch {
+            try { try { boolVars.Add(words[1], bool.Parse(words[3])); }
+                  catch { boolVars.Add(words[1], bool.Parse(words[3].Substring(0, words[3].Length - 1))); }} catch {
+            try { intVars.Add(words[1], (int)Eval.Evaluate(words, true)); } catch {
+            try { floatVars.Add(words[1], (float)Eval.Evaluate(words, true)); } catch {
             try { charVars.Add(words[1], char.Parse(line.Substring(line.IndexOf("'") + 1, (line.Length - words[1].Length) - 11))); } catch {
-            try { stringVars.Add(words[1], line.Substring(line.IndexOf("\"") + 1, (line.Length - words[1].Length) - 11)); } catch {
+            try
+            {
+                if (words[3] == "readLine()" || words[3] == "readLine();")
+                {
+                    stringVars.Add(words[1], Console.ReadLine());
+                }
+                else
+                {
+                    stringVars.Add(words[1], line.Substring(line.IndexOf("\"") + 1, (line.Length - words[1].Length) - 10));
+                }
+            } catch {
                 SilanManager.ThrowError("ERROR S3: Unrecognized type");
             }}}}}
         } else {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERROR S1: No '='");
-            Console.ResetColor();
-            Environment.Exit(1);
+            SilanManager.ThrowError("ERROR S1: No '='");
         }
     }
 
@@ -56,38 +65,35 @@ class Variables
         if (words.Count > 1) {
             if (words[1] == "=") {
                 if (stringVars.ContainsKey(words[0])) {
-                    if (words[2] == "readLine();") {
+                    if (words[2] == "readLine();" || words[2] == "readLine()") {
                         stringVars[words[0]] = Console.ReadLine();
                     }
                     else {
                         stringVars[words[0]] = line.Substring(line.IndexOf("\"") + 1, (line.Length - words[0].Length) - 6);
                     }
                 } else if (intVars.ContainsKey(words[0])) {
-                    if (words[2] == "readLine();") {
+                    if (words[2] == "readLine();" || words[2] == "readLine()") {
                         intVars[words[0]] = Int32.Parse(Console.ReadLine());
                     } else {
                         intVars[words[0]] = (int)Eval.ReEvaluate(words);
                     }
                 } else if (boolVars.ContainsKey(words[0])) {
-                    boolVars[words[0]] = bool.Parse(words[2]);
+                    try { boolVars[words[0]] = bool.Parse(words[2]); }
+                    catch { boolVars[words[0]] = bool.Parse(words[2].Substring(0, words[2].Length - 1)); }
                 } else if (floatVars.ContainsKey(words[0])) {
                     floatVars[words[0]] = (float)Eval.ReEvaluate(words);
                 } else if (charVars.ContainsKey(words[0])) {
                     charVars[words[0]] = char.Parse(words[2].Substring(1, words[2].Length - 2));
                 } else {
-                    Console.BackgroundColor = ConsoleColor.Red;
-                    Console.WriteLine("ERROR S2: Variable does not exist");
-                    Console.ResetColor();
-                    Environment.Exit(1);
+                    Constants constants = new Constants();
+                    bool isConst = constants.Check(words[0]);
+                    if (!isConst) {
+                        SilanManager.ThrowError("ERROR S2: Variable does not exist");
+                    }
                 }
             } else if (words[1].Contains('=')) {
                 ReassignOps(words, line);
-            } /* else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S4: Unknown Operation");
-                Console.ResetColor();
-                Environment.Exit(1);
-            } */
+            }
         } else {
             Shorthand(words);
         }
@@ -102,10 +108,7 @@ class Variables
             } else if (floatVars.ContainsKey(words[0])) {
                 floatVars[words[0]] += (float)Eval.ReEvaluate(words);
             } else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);
+                SilanManager.ThrowError("ERROR S2: Variable does not exist");
             }
         } else if (words[1] == "-=") {
             if (intVars.ContainsKey(words[0])) {
@@ -113,10 +116,7 @@ class Variables
             } else if (floatVars.ContainsKey(words[0])) {
                 floatVars[words[0]] -= (float)Eval.ReEvaluate(words);
             } else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);
+                SilanManager.ThrowError("ERROR S2: Variable does not exist");
             }
         } else if (words[1] == "*=") {
             if (intVars.ContainsKey(words[0])) {
@@ -124,10 +124,7 @@ class Variables
             } else if (floatVars.ContainsKey(words[0])) {
                 floatVars[words[0]] *= (float)Eval.ReEvaluate(words);
             } else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);
+                SilanManager.ThrowError("ERROR S2: Variable does not exist");
             }
         } else if (words[1] == "/=") {
             if (intVars.ContainsKey(words[0])) {
@@ -135,10 +132,7 @@ class Variables
             } else if (floatVars.ContainsKey(words[0])) {
                 floatVars[words[0]] /= (float)Eval.ReEvaluate(words);
             } else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);
+                SilanManager.ThrowError("ERROR S2: Variable does not exist");
             }
         } else if (words[1] == "%=") {
             if (intVars.ContainsKey(words[0])) {
@@ -146,10 +140,7 @@ class Variables
             } else if (floatVars.ContainsKey(words[0])) {
                 floatVars[words[0]] %= (float)Eval.ReEvaluate(words);
             } else {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("ERROR S2: Variable does not exist");
-                Console.ResetColor();
-                Environment.Exit(1);
+                SilanManager.ThrowError("ERROR S2: Variable does not exist");
             }
         } 
     }
@@ -167,11 +158,6 @@ class Variables
             } else if (floatVars.ContainsKey(words[0].Substring(0, words[0].Length - 2))) {
                 floatVars[words[0].Substring(0, words[0].Length - 2)]--;
             }
-        } /* else {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERROR S4: Unknown Operation");
-            Console.ResetColor();
-            Environment.Exit(1);
-        } */
+        } 
     }
 }

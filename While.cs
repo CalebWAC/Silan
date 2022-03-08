@@ -4,6 +4,8 @@ namespace Silan;
 
 public class While
 {
+    private int ActiveWhiles = 0;
+    
     private string[] Lines { get; set; }
     private int TempLineNumber { get; set; }
     private int End { get; set; }
@@ -11,13 +13,14 @@ public class While
 
     public void WhileLoop(List<string> words, string[] lines)
     {
+        ActiveWhiles++;
         TempLineNumber = Program.LineNumber;
         Lines = lines;
         
         while (Eval.IfEvaluate(words) == 1)
         {
-            stack.Push("while");
-            while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop("while")) {
+            stack.Push($"while{ActiveWhiles}");
+            while (!Lines[Program.LineNumber + 1].Contains("}") && stack.CheckTop($"while{ActiveWhiles}")) {
                 // Parses next line in loop
                 string lineL = Lines[Program.LineNumber + 1].Trim();
 
@@ -38,6 +41,8 @@ public class While
                 Program.LineNumber = TempLineNumber;
             }
         } 
+        
         Program.LineNumber = End + 1;
+        ActiveWhiles--;
     }
 }

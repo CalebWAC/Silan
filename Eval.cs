@@ -5,13 +5,19 @@ namespace Silan;
 
 class Eval 
 {
-    public static decimal Evaluate(List<string> words) {
+    public static decimal Evaluate(List<string> words, bool inferenced) {
         Expression e = new Expression();
         string toAdd = "";
         int count = 0;
         foreach (string vorto in words) {
-            if (count > 3) {
-                toAdd += vorto;
+            if (!inferenced) {
+                if (count > 3) {
+                    toAdd += vorto;
+                }
+            } else {
+                if (count > 2) {
+                    toAdd += vorto;
+                }
             }
             count++;
         }

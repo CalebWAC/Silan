@@ -73,6 +73,11 @@ class SilanManager
                 variables.AssignVar(words, line); 
                 break;
             
+            case "const":
+                Constants constants = new Constants();
+                constants.AssignConst(words, line);
+                break;
+            
             case "func":
                 break;
             
