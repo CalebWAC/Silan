@@ -1,18 +1,10 @@
 func main() {
-    const int days = 365;
-    var int years = 8;
+    print("Input a number: ");
+    var int number = readLine();
     
-    println(years);
-    
-    /* var int daysIn8Years = years * days;
-    println(daysIn8Years); */
-    
-    println("It worked!");
-    
-    /* other stuff and
-        things ergoierg
-        println("Hello!");
-    */
-    
-    println("post"):
+    if (number == 34) {
+        println("That is correct!");
+    } else {
+        println("That is incorrect.");
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using org.matheval.Node;
 
 namespace Silan;
 
@@ -99,6 +100,24 @@ class SilanManager
                 If ifObject = new If();
                 ifObject.ExecuteIfStatement(words, lines);
                 break;
+            
+            case "else":
+                Else:
+                If elseObject = new If();
+                if (If.ifRan == true) {
+                    elseObject.SkipOverElse(lines);
+                }
+                break;
+            case "}": // Runs else if the user typed "} else {"
+                try
+                {
+                    if (words[1] == "else")
+                    {
+                        goto Else;
+                    }
+                } catch {}
+
+                break;
 
             case "while":
                 While whileObject = new While();
@@ -128,7 +147,7 @@ class SilanManager
                 // Functions
                 bool funcRan = Functions.CheckFunc(words[0], line);
                 
-                // Variable Redeclaration (including shorthand operators
+                // Variable Redeclaration (including shorthand operators)
                 if (funcRan == false)
                 {
                     Variables redeclaration = new Variables();
