@@ -6,9 +6,12 @@ namespace Silan;
 
 class SilanManager
 {
+    private bool isCommented = false;
+    
     public void ThrowError(string message) 
     {
         Console.BackgroundColor = ConsoleColor.Red;
+        Console.Beep();
         Console.WriteLine(message);
         Console.ResetColor();
         Environment.Exit(1);
@@ -56,8 +59,19 @@ class SilanManager
         while (Program.LineNumber != lines.Length) {
             words = SplitLines(lines[Program.LineNumber]);
 
-            // Evaluates and runs for each word
-            ExecuteLine(words, lines[Program.LineNumber].Trim(), lines);
+            // Verifies the code is not
+            if (!isCommented)
+            {
+                // Evaluates and runs for each word
+                ExecuteLine(words, lines[Program.LineNumber].Trim(), lines);
+            } else { // Checks if it is uncommented
+                foreach (string word in words) {
+                    if (word.Contains("*/"))
+                    {
+                        isCommented = false;
+                    }
+                }
+            }
 
             Program.LineNumber++;
             words.Clear();
@@ -105,6 +119,10 @@ class SilanManager
             case "import":
                 break;
 
+            // Multi-line comment
+            case "/*":
+                isCommented = true;
+                break;
 
             default:
                 // Functions
