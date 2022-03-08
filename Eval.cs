@@ -23,6 +23,9 @@ class Eval
         }
         if (toAdd.Contains(';')) toAdd = toAdd.Substring(0, toAdd.Length - 1);
         e.SetFomular(toAdd);
+
+        CheckToBind(e);
+        
         return (decimal)e.Eval();
     }
     
@@ -68,11 +71,16 @@ class Eval
             try { e.Bind(variable, Variables.floatVars[variable]); } catch {
             try { e.Bind(variable, Variables.boolVars[variable]); } catch {
             try { e.Bind(variable, Variables.stringVars[variable]); } catch {
-            try { e.Bind(variable, Variables.charVars[variable]); } catch
-            {
+            try { e.Bind(variable, Variables.charVars[variable]); } catch {
+            try { e.Bind(variable, Constants.intConsts[variable]); } catch {
+            try { e.Bind(variable, Constants.floatConsts[variable]); } catch {
+            try { e.Bind(variable, Constants.boolConsts[variable]); } catch {
+            try { e.Bind(variable, Constants.stringConsts[variable]); } catch {
+            try { e.Bind(variable, Constants.charConsts[variable]); } catch {
+                                    
                 SilanManager silanManager = new SilanManager();
                 silanManager.ThrowError("ERROR S2: Variable does not exist");
-            }}}}}
+            }}}}}}}}}}
         }
     }
 }

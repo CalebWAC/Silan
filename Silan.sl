@@ -1,7 +1,7 @@
 func main() {
     const int days = 365;
-    println(days);
+    var int years = 8;
     
-    const char toBeAssigned = 'h';
-    toBeAssigned = 't';
+    var int daysIn8Years = years * days;
+    println(daysIn8Years);
 }
