@@ -1,10 +1,16 @@
-func main() {
+func askAndSay() {
     print("Input a number: ");
     var int number = readLine();
+   
+    print("Danke. Deine Nummer ist ");
+    println(number);
+}
+
+func main() {
+    println("Code ...");
+    println(" ");
     
-    if (number == 34) {
-        println("That is correct!");
-    } else {
-        println("That is incorrect.");
-    }
+    askAndSay();
+   
+    println("... its a thing");
 }

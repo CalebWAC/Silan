@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 namespace Silan;
 
 class Functions
 {
     private static SilanManager SilanManager = new SilanManager();
-    public static bool CheckFunc(string word, string line)
+    private static List<string> UserDefinedFunctions = new List<string>();
+    
+    public static bool CheckFunc(string word, string line, string[] lines)
     {
         if (word.Contains("print(")) {
             print(line, word);
@@ -13,6 +16,14 @@ class Functions
             println(line, word);
             return true;
         } else {
+            foreach (string function in UserDefinedFunctions)
+            {
+                if (word.Contains(function) || word.Substring(0, word.Length).Contains(function))
+                {
+                    Functions functionObj = new Functions();
+                    functionObj.RunUserDefinedFunction(lines, function);
+                }
+            }
             return false;
         }
     }
@@ -68,6 +79,58 @@ class Functions
            
             SilanManager.ThrowError("ERROR S2: Variable does not exist"); }}}}}}}}}}
             Console.WriteLine(toPrint);
+        }
+    }
+
+    public void AddNewFunction(string[] lines, List<string> words)
+    {
+        if (words[1] == "int" || words[1] == "bool" || words[1] == "float" || words[1] == "string" || words[1] == "char") {
+            UserDefinedFunctions.Add(words[2].Substring(0, words[2].Length - 2));
+        } else {
+            UserDefinedFunctions.Add(words[1]);
+        }
+
+        SkipOverDeclarationLines(lines);
+    }
+
+    public void SkipOverDeclarationLines(string[] lines)
+    {
+        int lineN = 0;
+        stack.Push("func");
+        foreach (string line in lines)
+        {
+            if (lines[lineN].Contains("}") && stack.CheckTop("func") && lineN > Program.LineNumber)
+            {
+                Program.LineNumber = lineN;
+                break;
+            }
+
+            lineN++;
+        }
+
+        stack.Pop();
+    }
+
+    public void RunUserDefinedFunction(string[] lines, string name)
+    {
+        bool foundIt = false;
+        bool inFunc = false;
+        
+        foreach (string line in lines)
+        {
+            if (line.Contains(name) && foundIt == false) {
+                Program.LineNumber = Array.IndexOf(lines, line);
+                foundIt = true;
+                inFunc = true;
+                stack.Push("func");
+            } else if (line.Contains(name) && foundIt && !inFunc) {
+                lines[Array.IndexOf(lines, line)] = "// " + line;
+                break;
+            } else if (line.Contains("}") && stack.CheckTop("func")) {
+                inFunc = false;
+            } else if (!inFunc) {
+                lines[Array.IndexOf(lines, line)] = "// " + line;
+            }
         }
     }
 }

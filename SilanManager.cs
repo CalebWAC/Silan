@@ -94,6 +94,11 @@ class SilanManager
                 break;
             
             case "func":
+                if (words[1] != "main()") {
+                    Functions function = new Functions();
+                    function.AddNewFunction(lines, words);
+                }
+
                 break;
             
             case "if":
@@ -145,7 +150,7 @@ class SilanManager
 
             default:
                 // Functions
-                bool funcRan = Functions.CheckFunc(words[0], line);
+                bool funcRan = Functions.CheckFunc(words[0], line, lines);
                 
                 // Variable Redeclaration (including shorthand operators)
                 if (funcRan == false)
