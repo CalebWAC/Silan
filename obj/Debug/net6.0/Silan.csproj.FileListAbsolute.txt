@@ -1,0 +1,17 @@
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\Silan.exe
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\Silan.deps.json
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\Silan.runtimeconfig.json
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\Silan.dll
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\ref\Silan.dll
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\Silan.pdb
+C:\Users\206578\Documents\Silan +Game\Silan\bin\Debug\net6.0\org.matheval.dll
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.csproj.AssemblyReference.cache
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.AssemblyInfoInputs.cache
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.AssemblyInfo.cs
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.csproj.CoreCompileInputs.cache
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.csproj.CopyComplete
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.dll
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\ref\Silan.dll
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.pdb
+C:\Users\206578\Documents\Silan +Game\Silan\obj\Debug\net6.0\Silan.genruntimeconfig.cache

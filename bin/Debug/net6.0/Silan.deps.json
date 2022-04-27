@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Silan/1.0.0": {
+        "dependencies": {
+          "org.matheval": "1.0.0.2"
+        },
+        "runtime": {
+          "Silan.dll": {}
+        }
+      },
+      "org.matheval/1.0.0.2": {
+        "runtime": {
+          "lib/netcoreapp3.1/org.matheval.dll": {
+            "assemblyVersion": "1.0.0.2",
+            "fileVersion": "1.0.0.2"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Silan/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "org.matheval/1.0.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BdfsFu8+p4wN89oRaZ0phYkmE6lzM4gbBq1mHX3BWLJCWGJqme9BMm/euLv8XSugrXMCHUnXZjX3n2QOqwjBpg==",
+      "path": "org.matheval/1.0.0.2",
+      "hashPath": "org.matheval.1.0.0.2.nupkg.sha512"
+    }
+  }
+}

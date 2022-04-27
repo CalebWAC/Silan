@@ -50,11 +50,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\206578\\RiderProjects\\Silan\\Silan.csproj",
+      "projectUniqueName": "C:\\Users\\206578\\Documents\\Silan +Game\\Silan\\Silan.csproj",
       "projectName": "Silan",
-      "projectPath": "C:\\Users\\206578\\RiderProjects\\Silan\\Silan.csproj",
+      "projectPath": "C:\\Users\\206578\\Documents\\Silan +Game\\Silan\\Silan.csproj",
       "packagesPath": "C:\\Users\\206578\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\206578\\RiderProjects\\Silan\\obj\\",
+      "outputPath": "C:\\Users\\206578\\Documents\\Silan +Game\\Silan\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\206578\\AppData\\Roaming\\NuGet\\NuGet.Config"

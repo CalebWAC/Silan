@@ -15,7 +15,18 @@ class Functions
         } else if (word.Contains("println(")) {
             println(line, word);
             return true;
-        } else {
+        } 
+        
+        // Imports
+        else if (Game.IsActive) {
+            Game game = new Game();
+            game.CheckFunc(word, line);
+            return true;
+        } 
+        
+        
+        // User defined functions
+        else {
             foreach (string function in UserDefinedFunctions)
             {
                 if (word.Contains(function) || word.Substring(0, word.Length).Contains(function))

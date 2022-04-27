@@ -8,6 +8,9 @@ namespace Silan;
 class SilanManager
 {
     private bool isCommented = false;
+
+    // Libraries
+    private bool GameLibActive = false;
     
     public void ThrowError(string message) 
     {
@@ -141,6 +144,8 @@ class SilanManager
             case "class":
                 break;
             case "import":
+                ImportManager importManager = new ImportManager();
+                importManager.AddLibrary(words[1]);
                 break;
 
             // Multi-line comment
